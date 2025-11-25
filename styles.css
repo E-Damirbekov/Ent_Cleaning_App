@@ -1,311 +1,125 @@
-﻿/* Mobile-first stylesheet for Recycling App
-   Focus: smartphone usability (tap areas, readable text, clear icons)
-   All sizes use rem units and scale with root font-size.
+﻿/*
+  Clean mobile-first stylesheet for the Recycling App
+  - Single unified source (no duplicate blocks)
+  - rem-based sizes that scale with root font-size
+  - safe-area & notch support (viewport-fit=cover required in index.html)
+  - responsive bottom navigation with env(safe-area-inset-bottom)
+  - CSS variables for easy tuning
 */
 
-/* Root scaling: tune base for phones (16px typical). Use clamp for small variance */
-html { font-size: clamp(15px, 2.5vw, 16px); }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background: linear-gradient(180deg, #f7fdf7 0%, #e9f7ec 100%);
-  color: #1f2937;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-}
-
-.screens-container { flex: 1; overflow: hidden; display: flex; }
-
-.screen {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: transparent;
-  -webkit-overflow-scrolling: touch;
-}
-.screen-content { flex: 1; overflow-y: auto; padding: 1rem; }
-
-/* Header */
-.screen-header {
-  background: linear-gradient(90deg,#43a047,#388e3c);
-  color: #fff;
-  padding: 0.9rem 1rem;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.screen-header h1 { font-size: 1.25rem; font-weight:700; }
-.screen-header .subtitle { font-size: 0.9rem; opacity:0.95; }
-.back-btn {
-  position:absolute; left:0.6rem; top:50%; transform:translateY(-50%);
-  background: rgba(255,255,255,0.12); color: #fff; border: 0; padding:0.45rem 0.6rem;
-  border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;
-}
-
-/* Bottom navigation - mobile-first large tap targets */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: 60px; display:flex; background: #fff; border-top: 1px solid #e6f0ea;
-  z-index: 60; align-items:center; justify-content:space-around; box-shadow:0 -4px 16px rgba(0,0,0,0.06);
-}
-.nav-btn { background: transparent; border:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#6b7280; padding:6px 8px; width:56px; height:48px; font-size:0.9rem; }
-.nav-btn.active { color:#0b6b2e; }
-.nav-icon { font-size:1.6rem; line-height:1; }
-.nav-label { font-size:0.72rem; margin-top:2px; }
-
-/* Cards and UI blocks */
-.stats-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:0.5rem; margin-bottom:0.8rem; }
-.stat-card { background: linear-gradient(180deg,#4caf50,#66bb6a); color:#fff; padding:0.7rem; border-radius:10px; text-align:center; }
-.stat-number { font-size:1.15rem; font-weight:700; }
-.stat-label { font-size:0.85rem; opacity:0.95; }
-
-.welcome-section { background:#f2fff2; border-left:4px solid #43a047; padding:0.75rem; border-radius:10px; margin-bottom:0.8rem; }
-.welcome-section h2 { font-size:1.05rem; margin-bottom:0.25rem; }
-.welcome-section p { font-size:0.95rem; color:#2f5d2f; }
-
-.quick-actions { display:flex; flex-direction:column; gap:0.6rem; }
-.action-btn { border:0; border-radius:12px; padding:0.9rem; font-size:1rem; font-weight:700; cursor:pointer; }
-.primary-btn { background:linear-gradient(90deg,#43a047,#388e3c); color:#fff; }
-.secondary-btn { background:#fff; border:1px solid #dfeee0; color:#2f6b2f; }
-
-/* Map placeholder */
-.map-container { width:100%; height:220px; border-radius:10px; background: linear-gradient(180deg,#b3e5fc,#81d4fa); display:flex; align-items:center; justify-content:center; margin-bottom:0.8rem; }
-.map-placeholder { font-size:2.2rem; color: rgba(255,255,255,0.9); }
-
-.bin-card { background:#fff; border-radius:10px; padding:0.7rem; margin-bottom:0.6rem; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
-.bin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem; }
-.bin-header h4 { font-size:1rem; }
-.distance { background:#e9f7ec; color:#2e7d32; padding:0.25rem 0.5rem; border-radius:8px; font-weight:700; font-size:0.85rem; }
-.bin-address { font-size:0.9rem; color:#6b7280; margin-bottom:0.45rem; }
-.type-badge { display:inline-block; background:#f1fff1; color:#2e7d32; padding:0.28rem 0.45rem; border-radius:8px; font-size:0.82rem; margin-right:0.35rem; }
-
-/* Rewards */
-.points-card { background: linear-gradient(90deg,#ffb74d,#ff9800); color:#fff; padding:0.9rem; border-radius:10px; text-align:center; }
-.points-number { font-size:1.9rem; font-weight:800; }
-.rewards-list { display:flex; flex-direction:column; gap:0.6rem; margin-top:0.6rem; }
-.reward-card { display:flex; align-items:center; gap:0.6rem; background:#fff; padding:0.6rem; border-radius:10px; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
-.reward-icon { font-size:1.6rem; }
-.reward-info h4 { font-size:0.98rem; margin-bottom:0.1rem; }
-.reward-info p { font-size:0.85rem; color:#6b7280; }
-.reward-price { margin-left:auto; font-weight:700; color:#ff9800; }
-.claim-btn { background:#0b6b2e; color:#fff; padding:0.45rem 0.7rem; border-radius:8px; font-weight:700; }
-
-/* Daily gifts grid responsive */
-.daily-gifts { display:grid; grid-template-columns: repeat(4, 1fr); gap:0.5rem; margin-top:0.6rem; }
-.gift-card { background:#fff; padding:0.5rem; border-radius:10px; text-align:center; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
-.gift-icon { font-size:1.4rem; margin-bottom:0.25rem; }
-.claim-daily-btn { padding:0.45rem; border-radius:8px; background:#0b6b2e; color:#fff; font-weight:700; }
-
-/* Profile */
-.profile-header { display:flex; gap:0.7rem; align-items:center; background:linear-gradient(90deg,#a5d6a7,#81c784); color:#fff; padding:0.6rem; border-radius:10px; margin-bottom:0.8rem; }
-.avatar { font-size:2.4rem; }
-.profile-info h2 { font-size:1rem; }
-.level { font-size:0.9rem; opacity:0.95; }
-.profile-stats { display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; }
-.stat-item { background:#f2fff2; padding:0.5rem; border-radius:10px; text-align:center; }
-.material-item { display:flex; justify-content:space-between; padding:0.45rem; background:#fff; border-radius:8px; margin-bottom:0.45rem; }
-
-/* Scrollbar small and subtle */
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-thumb { background:#cfead1; border-radius:6px; }
-
-/* Small screens adjustments (very small phones) */
-@media (max-width: 330px) {
-  .nav-icon { font-size:1.4rem; }
-  .nav-label { font-size:0.68rem; }
-  .daily-gifts { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* Landscape phones / small tablets */
-@media (min-width: 480px) {
-  .daily-gifts { grid-template-columns: repeat(5, 1fr); }
-  .map-container { height:260px; }
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #333; overflow: hidden; }
-.app-container { display: flex; flex-direction: column; height: 100vh; width: 100%; background: #fff; box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); position: relative; }
-.screens-container { flex: 1; overflow: hidden; display: flex; }
-.screen { width: 100%; height: 100%; display: flex; flex-direction: column; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; overflow-y: auto; padding-bottom: 70px; }
-.screen.active { opacity: 1; pointer-events: auto; }
-.screen-header { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); position: relative; flex-shrink: 0; }
-.screen-header h1 { font-size: 32px; margin-bottom: 5px; font-weight: bold; }
-.screen-header .subtitle { font-size: 16px; opacity: 0.9; }
-.back-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-.back-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-50%) scale(1.05); }
-.screen-content { flex: 1; overflow-y: auto; padding: 15px; }
-.bottom-nav { position: absolute; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: white; border-top: 1px solid #e0e0e0; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); height: 70px; z-index: 100; }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; padding: 8px; transition: all 0.3s ease; color: #999; }
-.nav-btn:hover { background: rgba(76, 175, 80, 0.05); }
-.nav-btn.active { color: #4caf50; }
-.nav-icon { font-size: 28px; margin-bottom: 4px; }
-.nav-label { font-size: 13px; white-space: nowrap; }
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-.stat-card { background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%); color: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-.stat-number { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-.stat-label { font-size: 14px; opacity: 0.9; }
-.welcome-section { background: #f1f8e9; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #4caf50; }
-.welcome-section h2 { font-size: 22px; margin-bottom: 8px; color: #2e7d32; font-weight: bold; }
-.welcome-section p { font-size: 16px; color: #558b2f; }
-.quick-actions { display: flex; flex-direction: column; gap: 10px; }
-.action-btn { padding: 14px; border: none; border-radius: 8px; font-size: 17px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-.primary-btn { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color: white; }
-.primary-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3); }
-.secondary-btn { background: #e8f5e9; color: #2e7d32; border: 2px solid #4caf50; }
-.secondary-btn:hover { background: #c8e6c9; }
-.map-container { width: 100%; height: 200px; background: linear-gradient(135deg, #b3e5fc 0%, #81d4fa 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-.map-placeholder { font-size: 56px; color: rgba(255, 255, 255, 0.8); }
-.recycling-bins h3 { margin-bottom: 10px; color: #2e7d32; font-size: 18px; }
-.bin-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
-.bin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
-.bin-header h4 { font-size: 17px; color: #2e7d32; }
-.distance { background: #c8e6c9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-size: 14px; font-weight: 600; }
-.bin-address { font-size: 14px; color: #999; margin-bottom: 8px; }
-.bin-types { display: flex; gap: 6px; flex-wrap: wrap; }
-.type-badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 13px; }
-.rewards-stats { display: flex; justify-content: center; margin-bottom: 20px; }
-.points-card { background: linear-gradient(135deg, #ffd54f 0%, #ffb74d 100%); color: white; padding: 20px 40px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3); }
-.points-label { font-size: 16px; opacity: 0.9; margin-bottom: 5px; }
-.points-number { font-size: 48px; font-weight: bold; }
-.rewards-list { display: flex; flex-direction: column; gap: 10px; }
-.reward-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
-.reward-icon { font-size: 44px; flex-shrink: 0; }
-.reward-info { flex: 1; }
-.reward-info h4 { font-size: 16px; margin-bottom: 2px; color: #2e7d32; }
-.reward-info p { font-size: 14px; color: #999; }
-.reward-price { font-weight: 600; color: #ffb74d; margin-right: 8px; font-size: 14px; }
-.claim-btn { padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; }
-.claim-btn:hover { background: #45a049; }
-.claim-btn.disabled { background: #ccc; cursor: not-allowed; }
-.daily-info { background: #e8f5e9; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #4caf50; }
-.daily-info p { font-size: 16px; color: #2e7d32; margin-bottom: 8px; }
-.streak { font-size: 17px; font-weight: 600; }
-.daily-gifts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-.gift-card { background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 10px; text-align: center; transition: all 0.3s ease; }
-.gift-card.active { border-color: #4caf50; background: #f1f8e9; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); }
-.gift-card.completed { background: #f1f8e9; }
-.day-number { font-size: 13px; color: #999; margin-bottom: 5px; }
-.gift-icon { font-size: 40px; margin-bottom: 5px; }
-.gift-card p { font-size: 14px; color: #2e7d32; margin-bottom: 5px; }
-.status { font-size: 12px; color: #4caf50; font-weight: 600; }
-.claim-daily-btn { width: 100%; padding: 6px; background: #4caf50; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.3s ease; }
-.claim-daily-btn:hover { background: #45a049; }
-.profile-header { display: flex; align-items: center; background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; gap: 15px; }
-.avatar { font-size: 64px; flex-shrink: 0; }
-.profile-info h2 { font-size: 22px; margin-bottom: 5px; }
-.level { font-size: 15px; opacity: 0.9; }
-.profile-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-.stat-item { background: #f1f8e9; padding: 16px; border-radius: 12px; text-align: center; }
-.stat-label { font-size: 14px; color: #999; margin-bottom: 8px; }
-.stat-value { font-size: 24px; font-weight: bold; color: #2e7d32; }
-.material-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.material-item { display: flex; justify-content: space-between; background: white; border: 1px solid #e0e0e0; padding: 12px; border-radius: 8px; }
-.material-name { font-weight: 600; color: #2e7d32; }
-.material-amount { font-weight: 700; color: #4caf50; }
-.profile-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
-.settings-btn, .logout-btn { padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-.settings-btn { background: #e8f5e9; color: #2e7d32; border: 2px solid #4caf50; }
-.settings-btn:hover { background: #c8e6c9; }
-.logout-btn { background: #ffebee; color: #c62828; border: 2px solid #f44336; }
-.logout-btn:hover { background: #ffcdd2; }
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #c8e6c9; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #a5d6a7; }
-@media (max-width: 480px) {
-  .screen-header h1 { font-size: 24px; }
-  .nav-icon { font-size: 22px; }
-  .nav-label { font-size: 10px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .daily-gifts { grid-template-columns: repeat(3, 1fr); }
-  .profile-stats { grid-template-columns: 1fr; }
-}
-/* Responsive root scaling: make all typography and icons scale with viewport
-   and allow templates to remain scalable across screen sizes.
-   Using rem-based sizes plus a responsive root font-size avoids hard FullHD-only rules. */
-
-html {
-  /* root font-size scales between 15px and 18px depending on viewport width */
-  font-size: clamp(15px, 1.2vw + 0.5px, 18px);
-}
+/* Root font-size: scale between 14px and 18px depending on viewport width */
+html { font-size: clamp(14px, 1.6vw, 18px); box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+body { margin:0; padding:0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #1f2937; background: linear-gradient(180deg,#f7fdf7,#e9f7ec); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; min-height:100vh; }
 
 :root{
-  /* Mobile-first sizes (focus on phones). Use rem units so everything scales with root font-size */
-  --fs-base: 1rem; /* base font size = html font-size */
-  --nav-icon: 1.9rem;    /* ~30px on 16px root */
-  --reward-icon: 2.2rem; /* slightly larger for reward icons */
-  --gift-icon: 1.9rem;
-  --avatar-size: 3rem;   /* avatar slightly smaller for mobile */
-  --h1-size: 1.6rem;
-  --h2-size: 1.25rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --nav-height: clamp(3.2rem, 8vw, 4.4rem); /* responsive nav height */
+  --nav-icon: 1.6rem;
+  --reward-icon: 2rem;
+  --gift-icon: 1.6rem;
+  --avatar-size: 2.6rem;
+  --radius: 0.6rem;
+  --accent: #43a047;
 }
 
-/* Generic scalable overrides (use rem values so sizes scale with the root font-size) */
-.screen-header h1 { font-size: var(--h1-size); }
-.screen-header .subtitle { font-size: 1rem; }
-.back-btn { font-size: 1rem; padding: 0.6rem 0.9rem; }
-.screen-content { padding: 1.1rem; }
-.bottom-nav { height: 3.8rem; /* slightly reduced to fit most phones while keeping tap area */ }
-.nav-icon { font-size: var(--nav-icon); line-height: 1; }
-.nav-label { font-size: 0.95rem; }
-.nav-btn { padding: 0.5rem 0.25rem; }
-.stat-number { font-size: 1.5rem; }
-.stat-label { font-size: 1rem; }
-.welcome-section h2 { font-size: var(--h2-size); }
-.welcome-section p { font-size: 1rem; }
-.action-btn { font-size: 1.05rem; padding: 1rem; border-radius: 10px; }
-.map-container { height: 11.5rem; }
-.map-placeholder { font-size: 3rem; }
-.recycling-bins h3 { font-size: 1.125rem; }
-.bin-header h4 { font-size: 1.125rem; }
-.distance, .bin-address { font-size: 1rem; }
-.type-badge { font-size: 0.95rem; padding: 0.45rem 0.7rem; }
-.points-number { font-size: 2.25rem; }
-.reward-icon { font-size: var(--reward-icon); }
-.gift-icon { font-size: var(--gift-icon); }
-.day-number { font-size: 1rem; }
-.claim-daily-btn, .claim-btn { font-size: 1rem; padding: 0.6rem 0.9rem; }
-.avatar { font-size: var(--avatar-size); }
-.profile-info h2 { font-size: 1.25rem; }
-.stat-item .stat-value { font-size: 1.125rem; }
+.app-container { display:flex; flex-direction:column; min-height:100vh; padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom)); }
+.screens-container { flex:1; display:block; }
+.screen { display:none; padding: var(--space-md); }
+.screen.active { display:block; }
+.screen-content { padding-bottom: var(--space-md); }
 
-/* Keep grid columns flexible for responsiveness */
-.daily-gifts { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
-.stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
+/* Header */
+.screen-header{ background: linear-gradient(90deg,var(--accent),#388e3c); color:#fff; padding: calc(var(--space-sm) + 0.25rem) var(--space-md); border-radius: 0.4rem; display:flex; align-items:center; justify-content:center; position:relative; }
+.screen-header h1{ font-size: 1.3rem; margin:0; font-weight:700; }
+.screen-header .subtitle{ font-size:0.9rem; margin-top:0.15rem; opacity:0.95; }
+.back-btn{ position:absolute; left:0.6rem; top:50%; transform:translateY(-50%); background: rgba(255,255,255,0.12); color:#fff; border:0; padding:0.45rem 0.6rem; border-radius:0.5rem; font-weight:600; font-size:0.95rem; }
 
+/* Bottom navigation (fixed) - responsive and notch-aware */
+.bottom-nav{ position:fixed; left:0; right:0; bottom:0; height:var(--nav-height); padding-bottom: env(safe-area-inset-bottom); display:flex; align-items:center; justify-content:space-around; background:#fff; border-top:1px solid #edf7ee; box-shadow:0 -6px 12px rgba(0,0,0,0.06); z-index:40; }
+.nav-btn{ background:transparent; border:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#6b7280; padding: calc(var(--space-xs) + 0.2rem) 0.5rem; font-size:0.85rem; min-width:44px; min-height:44px; }
+.nav-btn.active{ color: #0b6b2e; }
+.nav-icon{ font-size: var(--nav-icon); line-height:1; display:inline-block; }
+.nav-label{ font-size:0.7rem; margin-top:0.15rem; }
 
-/* Strong overrides to ensure emoji/icon sizes apply correctly across browsers
-   Use more specific selectors and line-height/display fixes. If browser cache
-   or service worker blocks updates, add cache-busting to index.html. */
-.app-container .bottom-nav .nav-btn .nav-icon {
-  display: inline-block;
-  line-height: 1;
-  font-size: 28px; /* default for desktop - can be adjusted */
+/* Grids and cards - responsive using minmax/auto-fit */
+.stats-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:0.6rem; margin-bottom:0.9rem; }
+.stat-card{ background: linear-gradient(180deg,#4caf50,#66bb6a); color:#fff; padding:0.7rem; border-radius:var(--radius); text-align:center; }
+.stat-number{ font-size:1.15rem; font-weight:700; }
+.stat-label{ font-size:0.85rem; }
+
+.welcome-section{ background:#f2fff2; border-left:4px solid var(--accent); padding:0.75rem; border-radius:var(--radius); margin-bottom:0.9rem; }
+.welcome-section h2{ font-size:1.05rem; margin:0 0 0.25rem 0; }
+
+.quick-actions{ display:flex; gap:0.6rem; flex-direction:column; }
+.action-btn{ border:0; border-radius:0.8rem; padding:0.85rem; font-size:1rem; font-weight:700; cursor:pointer; }
+.primary-btn{ background: linear-gradient(90deg,var(--accent),#388e3c); color:#fff; }
+.secondary-btn{ background:#fff; border:1px solid #dfeee0; color:#2f6b2f; }
+
+/* Map */
+.map-container{ width:100%; height:11.5rem; border-radius:0.8rem; background:linear-gradient(180deg,#b3e5fc,#81d4fa); display:flex; align-items:center; justify-content:center; margin-bottom:0.8rem; }
+.map-placeholder{ font-size:3rem; color:rgba(255,255,255,0.9); line-height:1; }
+
+.bin-card{ background:#fff; border-radius:0.7rem; padding:0.7rem; margin-bottom:0.6rem; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
+.bin-header{ display:flex; justify-content:space-between; align-items:center; gap:0.5rem; }
+.bin-header h4{ font-size:1rem; margin:0; }
+.distance{ background:#e9f7ec; color:#2e7d32; padding:0.25rem 0.5rem; border-radius:0.6rem; font-weight:700; font-size:0.85rem; }
+.bin-address{ font-size:0.9rem; color:#6b7280; margin:0.4rem 0; }
+.type-badge{ display:inline-block; background:#f1fff1; color:#2e7d32; padding:0.28rem 0.45rem; border-radius:0.6rem; font-size:0.82rem; }
+
+/* Rewards */
+.points-card{ background: linear-gradient(90deg,#ffb74d,#ff9800); color:#fff; padding:0.9rem; border-radius:0.8rem; text-align:center; }
+.points-number{ font-size:1.9rem; font-weight:800; }
+.rewards-list{ display:grid; gap:0.6rem; margin-top:0.6rem; }
+.reward-card{ display:flex; gap:0.6rem; align-items:center; background:#fff; padding:0.6rem; border-radius:0.8rem; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
+.reward-icon{ font-size: var(--reward-icon); line-height:1; }
+.reward-info h4{ font-size:0.98rem; margin:0 0 0.1rem 0; }
+.reward-price{ margin-left:auto; font-weight:700; color:#ff9800; }
+.claim-btn{ background:#0b6b2e; color:#fff; padding:0.45rem 0.7rem; border-radius:0.6rem; font-weight:700; }
+
+/* Daily gifts - flexible grid */
+.daily-gifts{ display:grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap:0.5rem; margin-top:0.6rem; }
+.gift-card{ background:#fff; padding:0.5rem; border-radius:0.8rem; text-align:center; box-shadow:0 6px 10px rgba(0,0,0,0.04); }
+.gift-icon{ font-size: var(--gift-icon); margin-bottom:0.25rem; }
+.claim-daily-btn{ padding:0.45rem; border-radius:0.6rem; background:#0b6b2e; color:#fff; font-weight:700; }
+
+/* Profile */
+.profile-header{ display:flex; gap:0.7rem; align-items:center; background:linear-gradient(90deg,#a5d6a7,#81c784); color:#fff; padding:0.6rem; border-radius:0.8rem; margin-bottom:0.8rem; }
+.avatar{ font-size: var(--avatar-size); line-height:1; }
+.profile-info h2{ font-size:1rem; margin:0; }
+.profile-stats{ display:grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap:0.5rem; }
+.material-item{ display:flex; justify-content:space-between; padding:0.45rem; background:#fff; border-radius:0.6rem; margin-bottom:0.45rem; }
+
+/* Scrollbar subtle */
+::-webkit-scrollbar{ width:6px; }
+::-webkit-scrollbar-thumb{ background:#cfead1; border-radius:6px; }
+
+/* Small breakpoints */
+@media (max-width: 360px){
+  :root{ --nav-icon:1.45rem; --reward-icon:1.75rem; --avatar-size:2.2rem; }
+  .nav-label{ font-size:0.65rem; }
 }
 
-.reward-icon, .gift-icon, .map-placeholder, .avatar {
-  display: inline-block;
-  line-height: 1;
+@media (min-width: 640px){
+  /* Small tablets: increase spacing */
+  :root{ --space-md:1.2rem; --nav-icon:1.85rem; }
+  .screen-header h1{ font-size:1.5rem; }
 }
 
-/* Slightly larger icons for FullHD by default; these can be tuned */
-.reward-icon { font-size: 44px; }
-.gift-icon { font-size: 40px; }
-.map-placeholder { font-size: 56px; }
-.avatar { font-size: 64px; }
+/* Desktop-ish: allow wider cards and columns but keep mobile-first look */
+@media (min-width: 1024px){
+  .stats-grid{ grid-template-columns: repeat(3, 1fr); }
+  .daily-gifts{ grid-template-columns: repeat(5, 1fr); }
+}
 
-/* Quick debug override - uncomment or enable if sizes still don't apply. */
-/* .app-container .bottom-nav .nav-btn .nav-icon { font-size: 48px !important; } */
+/* Ensure emoji and icons render consistently */
+.app-container .bottom-nav .nav-btn .nav-icon,
+.reward-icon, .gift-icon, .map-placeholder, .avatar{ display:inline-block; line-height:1; }
+
+/* Avoid any hard px overrides that previously broke scaling */
+/* If you want to tune sizes, adjust the :root variables above */
+
 
