@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Recycling App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .download-btn {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .download-btn:hover {
+            background: #c8e6c9;
+        }
+
+        .download-btn:disabled {
+            background: #ccc;
+            color: #999;
+            cursor: not-allowed;
+            border-color: #999;
+        }
+
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 2px dashed #4caf50;
+            margin-bottom: 20px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #2e7d32;
+            line-height: 1.6;
+        }
+
+        .instructions {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #e65100;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #e65100;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .copy-button {
+            background: #2196F3;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background: #1976D2;
+        }
+
+        .url-display {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 4px;
+            word-break: break-all;
+            font-size: 12px;
+            font-family: monospace;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 QR Code Generator</h1>
+        <p class="subtitle">Recycling App - Waste Recycling</p>
+
+        <div class="info-box">
+            ℹ️ <strong>Important:</strong> Before using, deploy your application to a web server and enter the full URL of your application.
+        </div>
+
+        <div class="form-group">
+            <label for="url">Your Application URL:</label>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <input type="text" id="url" placeholder="https://example.com/Ent_App or https://yourusername.github.io/Ent_App" value="">
+                <button class="copy-button" onclick="copyURL()">Copy</button>
+            </div>
+            <p class="helper-text">Enter the full address where your application is hosted</p>
+        </div>
+
+        <div class="button-group">
+            <button class="generate-btn" onclick="generateQR()">Create QR Code</button>
+            <button class="download-btn" id="downloadBtn" onclick="downloadQR()" disabled>Download</button>
+        </div>
+
+        <div class="qr-container" id="qrContainer" style="display: none;">
+            <div id="qrcode"></div>
+            <p class="helper-text" style="margin-top: 10px;">Scan this QR code with your phone</p>
+        </div>
+
+        <div class="instructions">
+            <h3>🚀 How to Use:</h3>
+            <ol>
+                <li>Deploy your files to one of these services:
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>GitHub Pages (free hosting)</li>
+                        <li>Netlify (free hosting with CI/CD)</li>
+                        <li>Vercel (free hosting)</li>
+                        <li>Your own server</li>
+                    </ul>
+                </li>
+                <li>Enter the full URL in the field above</li>
+                <li>Click "Create QR Code"</li>
+                <li>Download the QR code and print it</li>
+                <li>Share the QR code with friends!</li>
+            </ol>
+        </div>
+
+        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-top: 20px; font-size: 12px; color: #666;">
+            <strong>💡 Tip:</strong> After creating the QR code, you can:
+            <ul style="margin-left: 20px; margin-top: 8px;">
+                <li>Print it on stickers or posters</li>
+                <li>Share in social media (Instagram, Telegram)</li>
+                <li>Send via SMS or Email</li>
+                <li>Use in marketing materials</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let currentQRValue = null;
+
+        function generateQR() {
+            const url = document.getElementById('url').value.trim();
+            
+            if (!url) {
+                alert('Please enter your application URL');
+                return;
+            }
+
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+            currentQRValue = url;
+
+            // Create new QR code
+            new QRCode(document.getElementById('qrcode'), {
+                text: url,
+                width: 256,
+                height: 256,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Show QR code container
+            document.getElementById('qrContainer').style.display = 'block';
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        function downloadQR() {
+            if (!currentQRValue) {
+                alert('Please create QR code first');
+                return;
+            }
+
+            const canvas = document.querySelector('#qrcode canvas');
+            if (!canvas) {
+                alert('QR code was not created');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = 'recycling-app-qr-code.png';
+            link.click();
+        }
+
+        function copyURL() {
+            const url = document.getElementById('url').value.trim();
+            if (!url) {
+                alert('Enter URL before copying');
+                return;
+            }
+            
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy URL');
+            });
+        }
+
+        // Sample URLs
+        window.addEventListener('load', () => {
+            // Try to determine current URL
+            const currentPath = window.location.href.split('qr-generator.html')[0];
+            if (currentPath && currentPath.includes('http')) {
+                document.getElementById('url').placeholder = currentPath + 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

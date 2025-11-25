@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Recycling App - Cache Clear</title>
+    <link rel="stylesheet" href="styles.css?v=" + Date.now()>
+</head>
+<body onload="clearCache()">
+    <div class="app-container">
+        <!-- Navigation panel (bottom) -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-screen="home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-btn" data-screen="map">
+                <span class="nav-icon">📍</span>
+                <span class="nav-label">Map</span>
+            </button>
+            <button class="nav-btn" data-screen="rewards">
+                <span class="nav-icon">🎁</span>
+                <span class="nav-label">Rewards</span>
+            </button>
+            <button class="nav-btn" data-screen="daily">
+                <span class="nav-icon">📅</span>
+                <span class="nav-label">Daily</span>
+            </button>
+            <button class="nav-btn" data-screen="profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+
+        <!-- Screens container -->
+        <div class="screens-container">
+            <!-- Screen 1: Home page -->
+            <div class="screen active" id="home-screen">
+                <header class="screen-header">
+                    <h1>Recycling App</h1>
+                    <p class="subtitle">Help the Planet 🌍</p>
+                </header>
+                <div class="screen-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">1,250 kg</div>
+                            <div class="stat-label">Recycled</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">Bins</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">125</div>
+                            <div class="stat-label">Points</div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-section">
+                        <h2>Welcome! 👋</h2>
+                        <p>Start recycling right now and earn rewards for every item submitted!</p>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn primary-btn">
+                            📍 Find Nearest Bin
+                        </button>
+                        <button class="action-btn secondary-btn">
+                            🎁 Get Reward
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 2: Map with bins -->
+            <div class="screen" id="map-screen">
+                <header class="screen-header">
+                    <button class="back-btn" onclick="switchScreen('home')">← Back</button>
+                    <h1>Nearest Bins 📍</h1>
+                </header>
+                <div class="screen-content">
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <p>🗺️ Map</p>
+                        </div>
+                    </div>
+
+                    <div class="recycling-bins">
+                        <h3>Nearest bins:</h3>
+                        
+                        <div class="bin-card">
+                            <div class="bin-header">
+                                <h4>Central Square</h4>
+                                <span class="distance">250 m</span>
+                            </div>
+                            <p class="bin-address">Main St, 15</p>
+                            <div class="bin-types">
+                                <span class="type-badge">♻️ Plastic</span>
+                                <span class="type-badge">📄 Paper</span>
+                                <span class="type-badge">🥫 Metal</span>
+                            </div>
+                        </div>
+
+                        <div class="bin-card">
+                            <div class="bin-header">
+                                <h4>Victory Park</h4>
+                                <span class="distance">580 m</span>
+                            </div>
+                            <p class="bin-address">Lenin St, 42</p>
+                            <div class="bin-types">
+                                <span class="type-badge">♻️ Plastic</span>
+                                <span class="type-badge">🧴 Glass</span>
+                                <span class="type-badge">🥫 Metal</span>
+                            </div>
+                        </div>
+
+                        <div class="bin-card">
+                            <div class="bin-header">
+                                <h4>City Center</h4>
+                                <span class="distance">1.2 km</span>
+                            </div>
+                            <p class="bin-address">Central Ave, 1</p>
+                            <div class="bin-types">
+                                <span class="type-badge">♻️ Plastic</span>
+                                <span class="type-badge">📄 Paper</span>
+                                <span class="type-badge">🧴 Glass</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Rewards -->
+            <div class="screen" id="rewards-screen">
+                <header class="screen-header">
+                    <button class="back-btn" onclick="switchScreen('home')">← Back</button>
+                    <h1>My Rewards 🎁</h1>
+                </header>
+                <div class="screen-content">
+                    <div class="rewards-stats">
+                        <div class="points-card">
+                            <p class="points-label">Your Points</p>
+                            <p class="points-number">125</p>
+                        </div>
+                    </div>
+
+                    <h3>Available Rewards:</h3>
+                    <div class="rewards-list">
+                        <div class="reward-card">
+                            <div class="reward-icon">🎫</div>
+                            <div class="reward-info">
+                                <h4>10% Discount</h4>
+                                <p>At "EcoProducts" Store</p>
+                            </div>
+                            <div class="reward-price">50 points</div>
+                            <button class="claim-btn">Claim</button>
+                        </div>
+
+                        <div class="reward-card">
+                            <div class="reward-icon">🍕</div>
+                            <div class="reward-info">
+                                <h4>Green Pizza</h4>
+                                <p>15% Discount on Purchase</p>
+                            </div>
+                            <div class="reward-price">75 points</div>
+                            <button class="claim-btn">Claim</button>
+                        </div>
+
+                        <div class="reward-card">
+                            <div class="reward-icon">☕</div>
+                            <div class="reward-info">
+                                <h4>Eco Coffee</h4>
+                                <p>Free Beverage</p>
+                            </div>
+                            <div class="reward-price">100 points</div>
+                            <button class="claim-btn disabled">Claim</button>
+                        </div>
+
+                        <div class="reward-card">
+                            <div class="reward-icon">🎬</div>
+                            <div class="reward-info">
+                                <h4>Cinema</h4>
+                                <p>Ticket Discount</p>
+                            </div>
+                            <div class="reward-price">150 points</div>
+                            <button class="claim-btn disabled">Claim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: Daily Gifts -->
+            <div class="screen" id="daily-screen">
+                <header class="screen-header">
+                    <button class="back-btn" onclick="switchScreen('home')">← Back</button>
+                    <h1>Daily Gifts 📅</h1>
+                </header>
+                <div class="screen-content">
+                    <div class="daily-info">
+                        <p>Come back every day and get bonuses!</p>
+                        <p class="streak">Current Streak: <strong>7 Days</strong> 🔥</p>
+                    </div>
+
+                    <div class="daily-gifts">
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 1</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+10 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 2</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+15 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 3</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+10 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 4</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+15 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 5</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+20 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card completed">
+                            <div class="day-number">Day 6</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+15 points</p>
+                            <span class="status">✓ Claimed</span>
+                        </div>
+
+                        <div class="gift-card active">
+                            <div class="day-number">Day 7</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+50 points</p>
+                            <button class="claim-daily-btn">Claim</button>
+                        </div>
+
+                        <div class="gift-card">
+                            <div class="day-number">Day 8</div>
+                            <div class="gift-icon">🎁</div>
+                            <p>+10 points</p>
+                            <span class="status">Tomorrow</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 5: User Profile -->
+            <div class="screen" id="profile-screen">
+                <header class="screen-header">
+                    <button class="back-btn" onclick="switchScreen('home')">← Back</button>
+                    <h1>My Profile 👤</h1>
+                </header>
+                <div class="screen-content">
+                    <div class="profile-header">
+                        <div class="avatar">👨</div>
+                        <div class="profile-info">
+                            <h2>John Smith</h2>
+                            <p class="level">Level: <strong>Eco Educator</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Recycled</span>
+                            <span class="stat-value">1,250 kg</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Collections</span>
+                            <span class="stat-value">42</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Points</span>
+                            <span class="stat-value">125</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Eco Rating</span>
+                            <span class="stat-value">4.8 ⭐</span>
+                        </div>
+                    </div>
+
+                    <div class="recycled-materials">
+                        <h3>What You've Recycled:</h3>
+                        <div class="material-list">
+                            <div class="material-item">
+                                <span class="material-name">Plastic ♻️</span>
+                                <span class="material-amount">450 kg</span>
+                            </div>
+                            <div class="material-item">
+                                <span class="material-name">Paper 📄</span>
+                                <span class="material-amount">350 kg</span>
+                            </div>
+                            <div class="material-item">
+                                <span class="material-name">Glass 🧴</span>
+                                <span class="material-amount">200 kg</span>
+                            </div>
+                            <div class="material-item">
+                                <span class="material-name">Metal 🥫</span>
+                                <span class="material-amount">250 kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="settings-btn">⚙️ Settings</button>
+                        <button class="logout-btn">🚪 Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=" + new Date().getTime()></script>
+    <script>
+        function clearCache() {
+            // Clear all service worker caches
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    for (let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+            }
+
+            // Clear browser cache
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+
+            // Force no-cache
+            const meta = document.createElement('meta');
+            meta.httpEquiv = 'Cache-Control';
+            meta.content = 'no-cache, no-store, must-revalidate';
+            document.head.appendChild(meta);
+
+            console.log('Cache cleared!');
+        }
+    </script>
+</body>
+</html>
